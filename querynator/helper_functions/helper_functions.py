@@ -53,6 +53,18 @@ def gunzip_compressed_files(file_path, logger):
                 shutil.copyfileobj(f_in, f_out)
         return file_path[: -len(".gz")]
 
+# TODO: add function to gzip here
+
+def gzip_uncompressed_files(file_path, logger):
+    """
+    """
+    logger.info(f"Zipping vcf file ({os.path.basename(os.path.normpath(file_path))})")
+    if gzipped(file_path):
+        logger.info(f"File is already gzipped")
+    else:
+        with open(file_path, 'rb') as f_in, gzip.open(file_path+'.gz', 'wb') as f_out:
+            f_out.writelines(f_in)
+        return file_path+'.gz'
 
 def get_num_from_chr(s):
     """

@@ -12,7 +12,7 @@ from vcf.parser import _Info as VcfInfo
 from vcf.parser import field_counts as vcf_field_counts
 
 import querynator
-from querynator.helper_functions import gunzip_compressed_files, gzipped
+from querynator.helper_functions import gunzip_compressed_files, gzipped, gzip_uncompressed_files
 from querynator.query_api import query_cgi, query_civic, vcf_file
 from querynator.report_scripts import (
     add_tiers_and_scores_to_df,
@@ -370,6 +370,10 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
 
             # create and set new input file for cgi query
             mutations = f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf"
+
+            mutations = gzip_uncompressed_files(mutations,logger)
+
+            #TODO: zip mutations file here to hand it to query_cgi
 
         logger.info("Query the cancergenomeinterpreter (CGI)")
         headers = {"Authorization": email + " " + token}

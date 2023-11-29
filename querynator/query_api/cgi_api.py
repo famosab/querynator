@@ -255,10 +255,11 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
 
     input_files = {"mutations": mutations, "cnas": cnas, "translocations": translocations}
     # unzip files if necessary
-    for key, file_path in input_files.items():
-        if file_path is not None:
-            if gzipped(file_path):
-                input_files[key] = gunzip_compressed_files(file_path, logger)
+    #TODO: stop unzipping here
+    #for key, file_path in input_files.items():
+        #if file_path is not None:
+            #if gzipped(file_path):
+                #input_files[key] = gunzip_compressed_files(file_path, logger)
 
     url = submit_query_cgi(
         input_files["mutations"], input_files["cnas"], input_files["translocations"], genome, cancer, headers, logger
